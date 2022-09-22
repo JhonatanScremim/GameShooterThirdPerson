@@ -10,6 +10,9 @@ public class ThirdPersonShooter : MonoBehaviour
     [Header("Variavables Publics")]
     public float aimMaxDistance = 100;
 
+    [Header("Prefabs")]
+    public GameObject bulletPrefab;
+
     StarterAssetsInputs input;
     Camera mainCamera;
     ThirdPersonController tpc;
@@ -54,6 +57,18 @@ public class ThirdPersonShooter : MonoBehaviour
         {
             debugTransform.position = (ray.origin + ray.direction) * aimMaxDistance;
             aimPosition = (ray.origin + ray.direction) * aimMaxDistance;
+        }
+
+        //Configurações de tio
+        if (input.shoot)
+        {
+            input.shoot = false;
+            //Normalized para ajustar os numeros x y e z, caso seja 0,2, ira normalizar para 1
+            //Isso ajuda para que um tiro não tenha uma velocidade diferente do outro
+            Vector3 bulletDiretion = (aimPosition - transform.position).normalized;
+
+            //Instanciar o tiro(objeto que vai disparar, de onde vai sair o tiro, em qual direção vai)
+            Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(bulletDiretion));
         }
 
     }

@@ -22,6 +22,7 @@ namespace StarterAssets
 
 		[Header("Shooter Settings")]
 		public bool aim;
+		public bool shoot;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
@@ -51,6 +52,11 @@ namespace StarterAssets
 		{
 			AimInput(value.isPressed);
 		}
+
+		public void OnShoot(InputValue value)
+		{
+			ShootInput(value.isPressed);
+		}
 #endif
 
 		public void MoveInput(Vector2 newMoveDirection)
@@ -76,6 +82,11 @@ namespace StarterAssets
 		public void AimInput(bool newAimState)
 		{
 			aim = newAimState;
+		}
+
+		public void ShootInput(bool newShootState)
+		{
+			shoot = newShootState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)

@@ -1005,6 +1005,7 @@ MonoBehaviour:
   rotateSpeed: 15
   debugTransform: {fileID: 1155004210}
   aimMaxDistance: 100
+  bulletPrefab: {fileID: 3073068589311079342, guid: d84137ef35480074d99689725e6c4aed, type: 3}
 --- !u!1 &1764214107
 GameObject:
   m_ObjectHideFlags: 0
