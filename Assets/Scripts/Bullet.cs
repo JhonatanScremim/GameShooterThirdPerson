@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10;
+    public float speed = 120;
     Rigidbody rb;
     void Start()
     {

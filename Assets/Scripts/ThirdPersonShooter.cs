@@ -12,6 +12,10 @@ public class ThirdPersonShooter : MonoBehaviour
 
     [Header("Prefabs")]
     public GameObject bulletPrefab;
+    public GameObject pistolBullet;
+
+    [Header("Animations")]
+    Animator anim;
 
     StarterAssetsInputs input;
     Camera mainCamera;
@@ -22,6 +26,7 @@ public class ThirdPersonShooter : MonoBehaviour
         input = GetComponent<StarterAssetsInputs>();
         mainCamera = Camera.main;
         tpc = GetComponent<ThirdPersonController>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -35,11 +40,18 @@ public class ThirdPersonShooter : MonoBehaviour
 
         if(input.aim)
         {
+            //Setar Weight de uma layer de animação(index da layer, valor)
+            anim.SetLayerWeight(1, 1);
+
             //Fazer o personagem olhar para o centro ao ativar a mira
             var yawCamera = mainCamera.transform.rotation.eulerAngles.y;
             transform.rotation = Quaternion.Slerp(transform.rotation, 
                                                 Quaternion.Euler(0, yawCamera, 0),
                                                 Time.deltaTime * rotateSpeed);
+        }
+        else 
+        {
+            anim.SetLayerWeight(1, 0);
         }
 
         //Adicionar o raio para debug na distancia máxima do tiro
@@ -60,15 +72,15 @@ public class ThirdPersonShooter : MonoBehaviour
         }
 
         //Configurações de tio
-        if (input.shoot)
+        if (input.shoot && input.aim)
         {
             input.shoot = false;
             //Normalized para ajustar os numeros x y e z, caso seja 0,2, ira normalizar para 1
             //Isso ajuda para que um tiro não tenha uma velocidade diferente do outro
-            Vector3 bulletDiretion = (aimPosition - transform.position).normalized;
+            Vector3 bulletDiretion = (aimPosition - pistolBullet.transform.position).normalized;
 
             //Instanciar o tiro(objeto que vai disparar, de onde vai sair o tiro, em qual direção vai)
-            Instantiate(bulletPrefab, transform.position, Quaternion.LookRotation(bulletDiretion));
+            Instantiate(bulletPrefab, pistolBullet.transform.position, Quaternion.LookRotation(bulletDiretion));
         }
 
     }
